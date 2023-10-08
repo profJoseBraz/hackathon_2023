@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://bc84p5w1ui6lc"]
+
+[ext_resource type="Script" path="res://Camera3D.gd" id="1_jtwij"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="2_ouy54"]
+[ext_resource type="Resource" path="res://addons/data.hterrain" id="3_0hxta"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="4_vbqs2"]
+[ext_resource type="Texture2D" uid="uid://byg71i75cq8cf" path="res://node_3d_slot0_albedo_bump.png" id="5_2aa63"]
+[ext_resource type="Texture2D" uid="uid://fc1hqn2d7s5s" path="res://node_3d_slot0_normal_roughness.png" id="6_ybwmr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rgxig"]
+sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
+sun_angle_max = 0.0
+sun_curve = 0.191184
+
+[sub_resource type="Sky" id="Sky_wcwy1"]
+sky_material = SubResource("ProceduralSkyMaterial_rgxig")
+
+[sub_resource type="Environment" id="Environment_55k1x"]
+background_mode = 2
+background_energy_multiplier = 3.54
+sky = SubResource("Sky_wcwy1")
+sky_custom_fov = 103.4
+ambient_light_color = Color(0.596078, 0.235294, 0.380392, 1)
+ambient_light_energy = 1.8
+fog_enabled = true
+fog_light_color = Color(0.968627, 0.54902, 0.47451, 1)
+fog_light_energy = 0.17
+fog_density = 0.0001
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_albedo = Color(0.65098, 0.294118, 0.254902, 1)
+volumetric_fog_length = 48.72
+
+[sub_resource type="Resource" id="Resource_uq3wl"]
+script = ExtResource("4_vbqs2")
+mode = 0
+textures = [[ExtResource("5_2aa63")], [ExtResource("6_ybwmr")]]
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1.5842, 0.111881, 0.233852, -0.13299, 1.59375, 0.138434, -0.222526, -0.155991, 1.5821, -299.357, -1791.4, -1231.99)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.622948, -2.64496e-07, -1.63913e-07, 3.81842e-08, 0.574088, 0.241843, 1.56462e-07, -0.241843, 0.574088, -284.886, 4866.72, 464.447)
+near = 10.0
+far = 50000.0
+script = ExtResource("1_jtwij")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.621538, -0.0379926, -0.0176258, 0.0418819, 0.563818, 0.261572, 7.45058e-09, -0.262165, 0.565096, 7.62939e-06, 0.734253, 2.96918)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_55k1x")
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("2_ouy54")
+ambient_wind = 0.666
+map_scale = Vector3(100, 100, 100)
+centered = true
+_terrain_data = ExtResource("3_0hxta")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_uq3wl")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null
